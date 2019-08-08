@@ -22,6 +22,7 @@ export default {
   height: .7rem;
   background: rgba(0,0,0,.7);
   color: #fff;
+ 
 }
 #headLeft{
     float: left;

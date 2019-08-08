@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive exclude="detail">
+      <router-view></router-view>
+    </keep-alive>
     <TabBar v-if="$route.meta.tabBar"></TabBar>
     <Loding></Loding>
   </div>
@@ -8,25 +10,32 @@
 
 <script>
 import TabBar from "common/tabBar";
-import Loding from "./lib/loading/index.js";
+import Loding from "lib/loading/index.js";
 
-import axios from "axios"
+import axios from "axios";
+
+import { users_api } from "api/info.js";
+
 export default {
-    name:"App",
-    components:{
-      TabBar,
-      Loding,
-     
-    },
-  created() {
+  name: "App",
+  components: {
+    TabBar,
+    Loding
+  },
+  data() {
+    return {
+      pageIndex: 2,
+      pageSize: 10
+    };
+  },
+  created() {}
+};
 
- },
-}
 </script>
 
 
 <style>
-  #app{
-    height: 100%;
-  }
+#app {
+  height: 100%;
+}
 </style>

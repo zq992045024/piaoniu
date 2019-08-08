@@ -1,38 +1,36 @@
 import {city_api} from "api/info.js"
+import {city_hot_api} from "api/info.js"
+
 const state = {
     cityList:JSON.parse(sessionStorage.getItem("cityList"))||[],
     cityHot:JSON.parse(sessionStorage.getItem("cityHot"))||[],
     cityName: sessionStorage.getItem("cityName")||"北京",
-    cityId:sessionStorage.getItem("cityId")||10
+    cityId:sessionStorage.getItem("cityId")||2
 }
 const actions = {
     async handleGetCityAction({commit}){
+        
         let data = await city_api();
-        commit("handleGetCity",data)
+        commit("handleGetCity",data);
+
+        let hotdata = await city_hot_api();
+        commit("handleGetHotCity",hotdata)
     }
 }
 const mutations = {
     handleGetCity(state,params){
-        console.log(params.data)
         let citylist=[],cityhot=[];
-        params = params.data
         for(var i=0;i<params.length;i++){
-            
-            if(params[i].isHot){
-                state.cityHot.push({cityId:params[i].id,cityName:params[i].nm,})
-            }
-        }
-        for(var i=0;i<params.length;i++){
-            var letterFirst = params[i].yp.substr(0,1).toUpperCase();
+            var letterFirst = params[i].firstLetter;
             if(isCityList(letterFirst)){
                 for(var j=0;j<citylist.length;j++){
                     if(letterFirst == citylist[j].index){
-                        citylist[j].list.push({cityId:params[i].id,cityName:params[i].nm,})
+                        citylist[j].list.push({cityId:params[i].cityId,cityName:params[i].cityName,})
                         break;
                     }
                 }
             }else{
-                citylist.push({index:letterFirst,list:[{cityId:params[i].id,cityName:params[i].nm}]})
+                citylist.push({index:letterFirst,list:[{cityId:params[i].cityId,cityName:params[i].cityName}]})
             }
         }
         function isCityList(letterFirst){
@@ -56,7 +54,12 @@ const mutations = {
        
        sessionStorage.setItem("cityList",JSON.stringify(state.cityList))
        
-       sessionStorage.setItem("cityHot",JSON.stringify(state.cityHot))
+    },
+    handleGetHotCity(state,params){
+        for(var i=0;i<params.length;i++){
+            state.cityHot.push({cityId:params[i].cityId,cityName:params[i].cityName,})
+        }
+        sessionStorage.setItem("cityHot",JSON.stringify(state.cityHot))
     }
     
 }

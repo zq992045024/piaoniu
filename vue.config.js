@@ -10,6 +10,10 @@ module.exports = {
             "/goodss":{
                 target:"http://localhost:3000",
                 changeOrigin:true
+            },
+            "/piaoniu":{
+                target:"http://localhost:3000",
+                changeOrigin:true
             }
         }
     },

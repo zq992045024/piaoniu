@@ -1,9 +1,9 @@
 <template>
   <div>
     <HeaderCom />
-    <BackCom />
+    <v-touch id="back" tag="div" @tap="backHandlerss">&lt;</v-touch>
     <div id="Login">
-      <h3>手机用户登录</h3>
+      <h3>用户注册</h3>
       <form id="login">
         <div id="users">
           <input
@@ -23,18 +23,17 @@
             ref="password"
           />
         </div>
-        <button type="submit" @click="submitHandler($event)">登录</button>
-        <v-touch @tap="gotoRegister" tag="div" class="gotoRegister">
-          无账号，火速注册
+        <button type="submit" @click="submitHandler($event)">注册</button>
+        <v-touch @tap="gotoLogin" tag="div" class="gotoLogin">
+          已经有账号了，火速登录
         </v-touch>
       </form>
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data() {
@@ -44,10 +43,7 @@ export default {
     };
   },
   methods: {
-    gotoRegister(){
-      this.$router.push('/register')
-    },
-    backHandler() {
+    backHandlerss() {
       this.$router.back();
     },
     submitHandler(e) {
@@ -58,27 +54,32 @@ export default {
         username:username,
         password:password
       }
-      this.$store.dispatch("user/userLogin",userObj)
+      this.$store.dispatch("user/userRegister",userObj)
+    },
+    gotoLogin(){
+      this.$router.push('/login')
     }
   },
+
   computed:{
     ...mapState({
-      isLogin:state=>state.user.isLogin
+      isRegister:state=>state.user.isRegister
     })
   },
   watch:{
-    isLogin(n,o){
+    isRegister(n,o){
       if(n){
-        alert('登陆成功！')
-        this.$router.push('/mine')
+        alert('注册成功！')
+        this.$router.push('/login')
       }else{
-        alert('用户名或密码错误');
-        this.$router.go('/login')
+        alert('用户名重复');
+        this.$router.go('/register')
       }
     }
   }
 };
 </script>
+
 <style>
 #Login {
   width: 100%;
@@ -89,12 +90,10 @@ export default {
   background-color: #fff;
   z-index: 50;
   top: 0;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 10rem;
-  margin-top: .5rem;
 }
 #back {
   position: relative;
@@ -119,7 +118,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 6rem;
-  height: 4rem;
+  height: 5rem;
 }
 #login button {
   width: 100%;
@@ -140,7 +139,7 @@ export default {
   font-size: 0.3rem;
   padding: 0.3rem 0;
 }
-.gotoRegister{
+.gotoLogin{
   margin-top: .5rem
 }
 </style>

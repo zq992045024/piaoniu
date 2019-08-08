@@ -4,6 +4,7 @@ import store from "store"
 import router from "router"
 import "./mockCity/index.js"
 import "common/components/index.js"
+import "./mockUsers/index.js"
 
 import VueTouch from "vue-touch"
 

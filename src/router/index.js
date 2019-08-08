@@ -7,10 +7,12 @@ import concert from "./concert"
 import home from "./home"
 import cityList from "./cityList"
 import search from "./searchs"
+import login from "./login"
+import register from "./register"
+import detail from "./detail"
 Vue.use(VueRouter)
 
-
-export default new VueRouter({
+let router = new VueRouter({
     routes:[
         {
             path:"/",
@@ -22,6 +24,24 @@ export default new VueRouter({
         concert,
         home,
         cityList,
-        search
+        search,
+        login,
+        register,
+        detail
     ]
 })
+
+
+router.beforeEach((to,from,next)=>{
+    if(to.path !="/login" && to.meta.auth){
+        if(sessionStorage.getItem("token")){
+            next();
+        }else{
+            next("/login");
+        }
+    }else{
+        next();
+    }
+})
+
+export default router;

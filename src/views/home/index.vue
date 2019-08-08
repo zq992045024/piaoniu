@@ -1,17 +1,22 @@
 <template>
-<div>
+  <div id="home">
     <HeaderCom />
-    <SearchCom/>
-    <Main />
-</div>
+    <SearchCom />
+    <div class="main">
+      <Main />
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
+#home{
+  height:100%;
+}
+.main {
+    height:100%;
+}
 </style>

@@ -5,16 +5,17 @@ export default ()=>{
     let vm =  new LodingComponent({
         el:document.createElement("div"),
         data:{
-            flag:true,
+            flag:false,
         },
         methods:{
             handlerMount(){
-                document.body.appendChild(vm.$el)
+                this.flag = true
             },
             handlerDestory(){
-                document.body.removeChild(vm.$el)
+                this.flag = false
             }
         }
     }) 
+    document.body.appendChild(vm.$mount().$el)
     return vm;
 }

@@ -4,6 +4,7 @@ export default {
     name:"mine",
     meta:{
         tabBar:true,
-        auth:true
+        auth:true,
+        title:"我的"
     }
 }
