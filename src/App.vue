@@ -14,7 +14,7 @@ import Loding from "lib/loading/index.js";
 
 import axios from "axios";
 
-import { users_api } from "api/info.js";
+import { tick_api } from "api/info.js";
 
 export default {
   name: "App",
@@ -28,7 +28,9 @@ export default {
       pageSize: 10
     };
   },
-  created() {}
+  created() {
+   
+  }
 };
 
 </script>
